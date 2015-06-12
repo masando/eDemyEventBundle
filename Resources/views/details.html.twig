@@ -1,0 +1,22 @@
+<div itemscope itemtype="http://data-vocabulary.org/Event" class="event_details">
+    <div class="event_title">
+        <h1>{{ event.nombre }}</h1>
+    </div>
+    <div class="event_date">
+        <h1>{{ event.fecha|localizeddate('full', 'none') }}</h1>
+        {% if event.horaInicio and event.horaFin %}
+            <h2>Desde las <time itemprop="startDate" datetime="{{ event.startDate|date('Y-m-d\\TH:i:sP') }}">{{ event.horaInicio|localizeddate('none', 'short') }}</time> <br/>hasta las <time itemprop="endDate" datetime="{{ event.endDate|date('Y-m-d\\TH:i:sP') }}">{{ event.horaFin|localizeddate('none', 'short') }}</time></h2>
+        {% endif %}
+    </div>
+    <div>
+        <p>Infórmate - Llámanos: 965386116 - 656978321</p>
+    </div>
+    <div class="event_imagenes">
+        {% for image in event.imagenes %}
+            <img itemprop="photo" src="{{ image.webpath }}" alt="{{ event.nombre }}" />
+        {% endfor %}
+    </div>
+    <div itemprop="description" class="event_description">
+        {{ event.description|raw }}
+    </div>
+</div>

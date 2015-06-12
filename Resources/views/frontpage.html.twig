@@ -1,0 +1,65 @@
+<br/>
+{% if eventos_proximos|length %}
+    <h2 class="center">Próximos Eventos</h2>
+{% endif %}
+
+{% for event in eventos_proximos %}
+    <div class="event_details">
+        <div class="event_title">
+            <h1><a href="{{ path('edemy_event_event_details', { 'slug' : event.slug }) }}">{{ event.nombre }}</a></h1>
+        </div>
+        <div class="event_date">
+            <h1>{{ event.fecha|localizeddate('full', 'none') }}</h1>
+            <h2>Desde las {{ event.horaInicio|localizeddate('none', 'short') }} <br/>hasta las {{ event.horaFin|localizeddate('none', 'short') }}</h2>
+        </div>
+        <div>
+            <p>Infórmate - Llámanos: 965386116 - 656978321</p>
+        </div>
+        {#
+        <div class="event_imagenes">
+            {% for image in event.imagenes %}
+                <img src="{{ image.webpath }}" alt="{{ event.nombre }}" />
+            {% endfor %}
+        </div>
+        <div class="event_description">
+            {{ event.description|raw }}
+        </div>
+        #}
+    </div>
+    <br/>
+    <br/>
+{% endfor %}
+
+<br/>
+<div class="clear">
+    {% if eventos_anteriores|length %}
+        <h3 class="center">Eventos Anteriores</h3>
+    {% endif %}
+
+    {% for event in eventos_anteriores %}
+        <div class="event_details">
+            <div class="event_title">
+                <h1><a href="{{ path('edemy_event_event_details', { 'slug' : event.slug }) }}">{{ event.nombre }}</a></h1>
+            </div>
+            <div class="event_date">
+                <h1>{{ event.fecha|localizeddate('full', 'none') }}</h1>
+                <h2>Desde las {{ event.horaInicio|localizeddate('none', 'short') }} <br/>hasta las {{ event.horaFin|localizeddate('none', 'short') }} </h2>
+            </div>
+            <div>
+                <p>Infórmate - Llámanos: 965386116 - 656978321</p>
+            </div>
+            {#
+            <div class="event_imagenes">
+                {% for image in event.imagenes %}
+                    <img src="{{ image.webpath }}" alt="{{ event.nombre }}" />
+                {% endfor %}
+            </div>
+            <div class="event_description">
+                {{ event.description|raw }}
+            </div>
+            #}
+        </div>    
+        <br/>
+        <br/>
+    {% endfor %}
+</div>

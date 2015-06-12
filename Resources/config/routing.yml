@@ -1,0 +1,6 @@
+edemy_event_event_details:
+    path:           /{_locale}/evento/detalles/{slug}
+    defaults:       { _controller: edemy.main:indexAction }
+    methods:        [ GET ]
+    requirements:   { _locale: es|en, id: \d+ }
+

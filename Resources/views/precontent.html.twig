@@ -1,0 +1,40 @@
+{% if eventos_proximos is defined %}
+    <div class="clear">
+        <div class="precontent_event">
+            <div class="event_imagenes">
+                <a href="{{ path('edemy_event_frontpage') }}">
+                <img src="{{ eventos_proximos|first.imagenes|first.webpath(400) }}" />
+                </a>
+            </div>
+        </div>
+        {#
+        <br/><br/>
+        {% for event in eventos_proximos %}
+        <div class="event_details">
+            <h2 class="center">Próximo Evento en <a href="{{ path('namasteespacio.edemy_main_frontpage') }}">Espacio Namast&eacute;</a></h2>
+            <div class="event_title">
+                <h1><a href="{{ url(event.namespace ~ '.edemy_event_event_details', { 'slug' : event.slug }) }}">{{ event.nombre }}</a></h1>
+            </div>
+            <div class="event_date">
+                <h1>{{ event.fecha|localizeddate('full', 'none') }}</h1>
+                {% if event.horaInicio and event.horaFin %}
+                    <h2>Desde las {{ event.horaInicio|localizeddate('none', 'short') }} <br/>hasta las {{ event.horaFin|localizeddate('none', 'short') }}</h2>
+                {% endif %}
+            </div>
+            <div>
+                <p>Infórmate - Llámanos: 965386116 - 656978321</p>
+            </div>
+            <div class="event_imagenes">
+                {% for image in event.imagenes %}
+                    <img src="{{ image.webpath }}" alt="{{ event.nombre }}" />
+                {% endfor %}
+            </div>
+            <div class="event_description">
+                {{ event.description|raw }}
+            </div>
+        </div>
+        <br/><br/>
+        {% endfor %}
+        #}
+    </div>
+{% endif %}
