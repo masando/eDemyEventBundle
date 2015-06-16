@@ -22,12 +22,10 @@ class eDemyEventExtension extends Extension
         $configuration = new Configuration();
         $config = $this->processConfiguration($configuration, $configs);
 
-        if($config['enabled']) {
-            $this->addClassesToCompile(array(
-                'eDemy\\EventBundle\\Controller\\EventController',
-            ));
-            $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
-            $loader->load('services.yml');
-        }
+        $this->addClassesToCompile(array(
+            'eDemy\\EventBundle\\Controller\\EventController',
+        ));
+        $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
+        $loader->load('services.yml');
     }
 }

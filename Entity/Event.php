@@ -3,6 +3,8 @@
 namespace eDemy\EventBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
+use Gedmo\Translatable\Translatable;
 use Doctrine\Common\Collections\ArrayCollection;
 use eDemy\MainBundle\Entity\BaseEntity;
 use eDemy\EventBundle\Entity\Imagen;

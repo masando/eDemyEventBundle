@@ -4,6 +4,8 @@ namespace eDemy\EventBundle\Controller;
 
 use eDemy\MainBundle\Controller\BaseController;
 use eDemy\MainBundle\Event\ContentEvent;
+use Symfony\Component\EventDispatcher\GenericEvent;
+use eDemy\MainBundle\Entity\Param;
 
 class EventController extends BaseController
 {
@@ -14,14 +16,32 @@ class EventController extends BaseController
             'edemy_event_event_details_lastmodified' => array('onEventDetailsLastModified', 0),
             //'edemy_precontent_module' => array('onPreContentModule', 0),
             'edemy_postcontent_module' => array('onPostContentModule', 0),
+            'edemy_mainmenu'                        => array('onEventMainMenu', 0),
         ));
+    }
+
+    public function onEventMainMenu(GenericEvent $menuEvent) {
+        $items = array();
+        if ($this->get('security.authorization_checker')->isGranted('ROLE_ADMIN')) {
+            $item = new Param($this->get('doctrine.orm.entity_manager'));
+            $item->setName('Admin_Eventos');
+            if($namespace = $this->getNamespace()) {
+                $namespace .= ".";
+            }
+            $item->setValue($namespace . 'edemy_event_event_index');
+            $items[] = $item;
+        }
+
+        $menuEvent['items'] = array_merge($menuEvent['items'], $items);
+
+        return true;
     }
 
     public function onFrontpage(ContentEvent $event)
     {
         $this->get('edemy.meta')->setTitlePrefix("Eventos");
 
-        $this->addEventModule($event, "frontpage.html.twig", array(
+        $this->addEventModule($event, "templates/event_frontpage", array(
             'eventos_proximos' => $this->getRepository($event->getRoute())->findProximos(),
             'eventos_anteriores' => $this->getRepository($event->getRoute())->findAnteriores(),
         ));
@@ -47,7 +67,7 @@ class EventController extends BaseController
         $this->get('edemy.meta')->setDescription($entity->getMetaDescription());
         $this->get('edemy.meta')->setKeywords($entity->getMetaKeywords());
 
-        $this->addEventModule($event, 'details.html.twig', array(
+        $this->addEventModule($event, 'templates/event_details', array(
             'event' => $entity,
             
         ));
@@ -55,7 +75,7 @@ class EventController extends BaseController
 
     public function onPreContentModule(ContentEvent $event) {
         if($this->getRoute() != 'edemy_main_frontpage') {
-            $this->addEventModule($event, 'precontent.html.twig', array(
+            $this->addEventModule($event, 'templates/event_precontent', array(
                 'eventos_proximos' => $this->get('doctrine.orm.entity_manager')->getRepository('eDemyEventBundle:Event')->findProximo(),
             ));
         }
@@ -65,7 +85,7 @@ class EventController extends BaseController
 
     public function onPostContentModule(ContentEvent $event) {
         if($this->getRoute() != 'edemy_main_frontpage') {
-            $this->addEventModule($event, 'postcontent.html.twig', array(
+            $this->addEventModule($event, 'templates/event_postcontent', array(
                 'eventos_proximos' => $this->get('doctrine.orm.entity_manager')->getRepository('eDemyEventBundle:Event')->findProximo(),
             ));
         }

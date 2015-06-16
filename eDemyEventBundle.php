@@ -6,8 +6,27 @@ use Symfony\Component\HttpKernel\Bundle\Bundle;
 
 class eDemyEventBundle extends Bundle
 {
-    public static function getBundleName()
+    public static function getBundleName($type = null)
     {
-        return 'eDemyEventBundle';
+        if ($type == null) {
+
+            return 'eDemyEventBundle';
+        } else {
+            if ($type == 'Simple') {
+
+                return 'Event';
+            } else {
+                if ($type == 'simple') {
+
+                    return 'event';
+                }
+            }
+        }
     }
+
+    public static function eDemyBundle() {
+
+        return true;
+    }
+
 }
